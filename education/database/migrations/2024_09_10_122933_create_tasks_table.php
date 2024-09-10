@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('title')->unique();
+            $table->longtext('description');
+            $table->date('end_date')->default('2024-09-10');
+            $table->boolean('status')->default(0);
+            //itt lyen nevű mező (létre is hozom) összekötése egy olyan nevű mezővel abban a táblában
+            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('project_id')->references('id')->on('projects');
+            $table->timestamps();  
         });
     }
 
